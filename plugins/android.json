@@ -1,0 +1,22 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-sqlite-2": {
+            "PACKAGE_NAME": "com.nup.me"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.nup.me"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "857416814607",
+            "PACKAGE_NAME": "com.nup.me"
+        }
+    },
+    "dependent_plugins": {}
+}

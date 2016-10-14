@@ -88,13 +88,16 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
 				}
 			}
             extras = normalizeExtras(applicationContext, extras);
-
+	    try {
 			File dir = applicationContext.getFilesDir();
 			SQLiteDatabase db = SQLiteDatabase.openDatabase(dir+"/mydb.db", null, 0);
 			ContentValues values = new ContentValues();			
 			values.put("rows", json.toString()); // Inserting Row
 			db.insert("main", null, values);
-			db.close(); // Closing database connection    
+			db.close(); // Closing database connection
+		} catch(Exception e) {
+		Log.e(LOG_TAG, "db exception");
+		}    
 						
             if (clearBadge) {
                 PushPlugin.setApplicationIconBadgeNumber(getApplicationContext(), 0);

@@ -31,41 +31,49 @@
       <meta name="format-detection" content="telephone=no">
       <meta name="msapplication-tap-highlight" content="no">
       <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-      <link rel="stylesheet" type="text/css" href="css/jquery.mobile.custom.structure.css">
-      <link rel="stylesheet" type="text/css" href="css/jquery.mobile.custom.theme.css">
+      <link rel="stylesheet" type="text/css" href="css/jquery.mobile.css">
       <script type="text/javascript" src="js/jquery.js"></script>
-      <script type="text/javascript" src="js/jquery.mobile.custom.js"></script>
+      <script type="text/javascript" src="js/jquery.mobile.js"></script>
       <script type="text/javascript" src="js/templateengine.js"></script>
       <script type="text/javascript" src="js/serializeobject.js"></script>
       <script type="text/javascript" src="cordova.js"></script>
       <script type="text/javascript" src="js/index.js"></script>
       <title>New Unified Push</title>
       <style>
-         .myfieldset .ui-input-text {
-            float: left;
-         }
-         #tabs .ui-listview>.ui-li-static
+         #tabOne .ui-listview .ui-li-aside
          {
-            padding: 0.1em 1em 0.1em 1em;
+            right: 0.5em;
+            line-height: 4.5em;
          }
-         #tabs li.ui-li-static {
+         .ui-listview>.centered.ui-li-divider
+         {
             text-align: center;
          }
-         .ui-controlgroup-controls button.vertical {
-            display: block !important;
-            text-align: center;
-            margin: 0 auto !important;
-            width: 253px !important;
-         }
-         .listviewbtns button
+         .checkBoxLeft
          {
-            width: 100px !important;
+            position: absolute;
+            border: 1px solid #ddd;
+            width: 50px;
+            height: 81px;
+            background: #f6f6f6;
+            border-radius: 3px;
          }
-         .fullcontrolgroup .ui-controlgroup-controls  { width:100%}
+         .checkBoxLeft .ui-checkbox
+         {
+            margin: 2.5em 0 0 0.2em;
+         }
+         .listviewEdit
+         {
+            margin: 0 0 0 2.8em !important;
+         }
+         .notificon
+         {
+            height: 75%;
+            padding: 0.5em;
+         }
       </style>
    </head>
    <body>
-
 
       <div data-role="page">
 
@@ -80,115 +88,81 @@
          </div><!-- /panel -->
 
          <div role="main" class="ui-content" >
-            <div class="content">
-               <div data-role="tabs" id="tabs">
-                  <div id="dash" style="height: 190px;">
+            <div data-role="tabs" id="tabs">
+               <div data-role="navbar" style="bottom: 10px;position: fixed;width: 90vw;left: 5vw;">
+                  <ul>
+                     <li><a href="#tabOne" data-ajax="false">tabOne</a></li>
+                     <li><a href="#tabTwo" data-ajax="false">tabTwo</a></li>
+                     <li><a href="ajax-content-ignore.html" data-ajax="false">three</a></li>
+                  </ul>
+               </div>
+               <div id="tabOne">
+                  <ul data-role="listview" data-inset="true">
+                     <li data-icon="false"><a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">
+                           <img class="notificon" src="./icons/angellist.png">
+                           <h2>Notif Title</h2>
+                           <p>notif body ok</p><p class="ui-li-aside">23:40</p></a>
+                     </li>
+                     <li data-icon="false"><div class="checkBoxLeft">
+                           <input type="checkbox" name="checkbox-1" id="checkbox-1" class="hidden-checkbox" checked="checked" />
+                        </div><a class="listviewEdit" href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">
+                           <img class="notificon" src="./icons/hourglass-start.png">
+                           <h2>Notif Title</h2>
+                           <p>notif body ok</p><p class="ui-li-aside">23:40</p></a>
+                     </li>
+                     <li data-role="list-divider" class="centered">23/01/2016</li>
+                     <li data-icon="false"><a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">
+                           <img class="notificon" src="./icons/group.png">
+                           <h2>Notif Title</h2>
+                           <p>notif body ok</p><p class="ui-li-aside">23:40</p></a>
+                     </li>
+                  </ul>
+               </div>
+               <div id="tabTwo" class="ui-body-d ui-content">
+                  <form method="post">
                      <ul data-role="listview" data-inset="true">
-                        <li>
-                           <fieldset data-role="controlgroup" data-type="horizontal" style="zoom:0.8;">
-                              <button class="odds ui-shadow ui-btn ui-corner-all" value="10">AI</button>
-                              <button class="odds ui-shadow ui-btn ui-corner-all" value="20">VU</button>
-                              <button class="odds ui-shadow ui-btn ui-corner-all" value="30">U</button>
-                              <button class="odds ui-shadow ui-btn ui-corner-all" value="40">SU</button>
-                              <button class="odds ui-shadow ui-btn ui-corner-all" value="50">50/50</button>
-                              <button class="odds ui-shadow ui-btn ui-corner-all" value="60">SL</button>
-                              <button class="odds ui-shadow ui-btn ui-corner-all" value="70">L</button>
-                              <button class="odds ui-shadow ui-btn ui-corner-all" value="80">VL</button>
-                              <button class="odds ui-shadow ui-btn ui-corner-all" value="90">ST</button>
-                           </fieldset>
+                        <li class="ui-field-contain">
+                           <label>Empty table</label>
+                           <button type="button" onclick="javascript:(function(e, obj){ obj.blur();confirmDialog('Empty table?',recreateTable); })(event, this)" class="ui-btn ui-corner-all ui-btn-a">Cancel</button>
                         </li>
-                        <li>
-                           <fieldset class="myfieldset" style="margin: 0;" data-role="controlgroup" data-type="horizontal" data-mini="true">
-                              <input style="float:left" type="text" name="textinput-2" id="dicerollerval" placeholder="Roll dice (1d4+2)" value="">
-                              <button style="margin: 5px;0px;0px;5px;" class="ui-shadow ui-btn ui-corner-all" type="button" id="diceroller">Roll</button>
-                              <span style="clear:both"></span>
-                           </fieldset>
+                        <li class="ui-field-contain">
+                           <label for="flip2">Flip switch:</label>
+                           <select name="flip2" id="flip2" data-role="slider">
+                              <option value="off">Off</option>
+                              <option value="on">On</option>
+                           </select>
                         </li>
-                        <li>
-                           <button style="zoom: 0.9;" class="getrand ui-shadow ui-btn ui-corner-all" type="button" id="damage">Damage</button>
+                        <li class="ui-field-contain">
+                           <label for="slider2">Slider:</label>
+                           <input type="range" name="slider2" id="slider2" value="0" min="0" max="100" data-highlight="true">
                         </li>
-
-                        <li>
-                           <button style="zoom: 0.9;" class="ui-shadow ui-btn ui-corner-all" type="button" id="clear">Clear</button></li>
-
-                     </ul>
-                  </div>
-                  <div id="story" style="height: 190px;">
-                     <ul data-role="listview" data-inset="true" class="listviewbtns">
-                        <li>
-                           <br>
-                           <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" style="margin-bottom: 0px;">
-                              <button class="getrand ui-shadow ui-btn ui-corner-all" type="button" id="quest">Quest</button>
-                              <button class="getrand ui-shadow ui-btn ui-corner-all" type="button" id="person">Person</button>
-                           </fieldset>
-                           <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" style="margin: -1px 0px;">
-                              <button class="getrand ui-shadow ui-btn ui-corner-all" type="button" id="place">Place</button>
-                              <button class="getrand ui-shadow ui-btn ui-corner-all" type="button" id="opposition">Opposition</button>
-                           </fieldset>
-                           <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" style="margin: -1px 0px;">
-                              <button class="getrand ui-shadow ui-btn ui-corner-all" type="button" id="thing">Thing</button>
-                              <button class="getrand ui-shadow ui-btn ui-corner-all" type="button" id="skill">Skill</button>
-                           </fieldset>
-                           <br>
-                        </li>
-                     </ul>
-                  </div>
-                  <div id="action" style="height: 190px;">
-                     <ul data-role="listview" data-inset="true"  class="listviewbtns">
-                        <li><br>
-                           <fieldset data-role="controlgroup" data-mini="true">
-                              <button class="getrand ui-shadow ui-btn ui-corner-all vertical" type="button" id="focus">Focus</button>
-                              <button class="getrand ui-shadow ui-btn ui-corner-all vertical" type="button" id="action">Action</button>
-                              <button class="getrand ui-shadow ui-btn ui-corner-all vertical" type="button" id="subject">Subject</button>
-                              <fieldset style="margin-top: 0px;" data-role="controlgroup" data-type="horizontal">
-                                 <button style="border-bottom-width: 1px;" class="getrand ui-shadow ui-btn ui-corner-all" type="button" id="complexdesc">Complex desc</button>
-                                 <button class="getrand ui-shadow ui-btn ui-corner-all" type="button" id="complexqst">Complex question</button>
-                              </fieldset>
+                        <li class="ui-body ui-body-b">
+                           <fieldset class="ui-grid-a">
+                              <div class="ui-block-a"><button type="submit" class="ui-btn ui-corner-all ui-btn-a">Cancel</button></div>
+                              <div class="ui-block-b"><button type="submit" class="ui-btn ui-corner-all ui-btn-a">Submit</button></div>
                            </fieldset>
                         </li>
                      </ul>
-                  </div>
-                  <div id="other" style="height: 190px;">
-                     <ul data-role="listview" data-inset="true">
-                        <li><br>
-                           <fieldset data-role="controlgroup" data-mini="true">
-                              <button class="getrand ui-shadow ui-btn ui-corner-all vertical" type="button" id="started">Started</button>
-                              <button class="getrand ui-shadow ui-btn ui-corner-all vertical" type="button" id="setting">Setting</button>
-                              <button class="getrand ui-shadow ui-btn ui-corner-all vertical" type="button" id="unenpc">UNE-NPC</button>
-                              <a href="#popupLogin"  data-rel="popup" data-position-to="window"  class="ui-shadow ui-btn ui-corner-all vertical" id="cards" data-transition="pop">Cards</a>
-
-                           </fieldset>
-                        </li>
-                     </ul>
-                  </div>
-                  <div data-role="navbar" style="display:inline">
-                     <ul>
-                        <li class="tab"><a href="#dash" class="ui-btn-active" data-ajax="false">Dashbrd</a></li>
-                        <li class="tab"><a href="#story" data-ajax="false">Storyln</a></li>
-                        <li class="tab"><a href="#action" data-ajax="false">Actions</a></li>
-                        <li class="tab"><a href="#other" data-ajax="false">Otherthg</a></li>
-                     </ul>
-                  </div>
+                  </form>
                </div>
             </div>
-         </div><!-- /content -->
+         </div>
+         <!-- /content -->
 
          <div data-role="footer" data-position="fixed" data-fullscreen="true">
 
 
          </div><!-- /footer -->
+         <div data-role="popup" id="purchase" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+            <h3>Purchase Album?</h3>
+            <p>Your download will begin immediately on your mobile device when you purchase.</p>
+            <a href="index.html" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Buy: $10.99</a>
+            <a href="index.html" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini">Cancel</a>
+         </div>
          <div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all">
             <div style="padding:10px 20px;">
                <div class="ui-grid-b">
-                  <div class="ui-block-a"><div class="ui-bar ui-bar-a"><img src="img/magicimages/ace.png" style="width:100%"></div></div>
-                  <div class="ui-block-b"><div class="ui-bar ui-bar-a"><img src="img/magicimages/ace.png" style="width:100%"></div></div>
-                  <div class="ui-block-c"><div class="ui-bar ui-bar-a"><img src="img/magicimages/ace.png" style="width:100%"></div></div>
-                  <div class="ui-block-a"><div class="ui-bar ui-bar-a"><img src="img/magicimages/ace.png" style="width:100%"></div></div>
-                  <div class="ui-block-b"><div class="ui-bar ui-bar-a"><img src="img/magicimages/ace.png" style="width:100%"></div></div>
-                  <div class="ui-block-c"><div class="ui-bar ui-bar-a"><img src="img/magicimages/ace.png" style="width:100%"></div></div>
-                  <div class="ui-block-a"><div class="ui-bar ui-bar-a"><img src="img/magicimages/ace.png" style="width:100%"></div></div>
-                  <div class="ui-block-b"><div class="ui-bar ui-bar-a"><img src="img/magicimages/ace.png" style="width:100%"></div></div>
-                  <div class="ui-block-c"><div class="ui-bar ui-bar-a"><img src="img/magicimages/ace.png" style="width:100%"></div></div>
+
                </div><!-- /grid-c -->
             </div>
          </div>
@@ -197,5 +171,8 @@
          <input type="checkbox" name="classes" id="checkbox-1a{{classe}}" checked="" value="{{classe}}">
          <label for="checkbox-1a{{classe}}">{{classe}}</label>
       </script>
+
+
+
    </body>
 </html>

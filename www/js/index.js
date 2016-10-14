@@ -1,9 +1,8 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 APIURL = "http://lucatarik.altervista.org/ext_feed/notification.php";
 
-if (typeof sqlitePlugin == 'undefined')
-   sqlitePlugin = window;
-db = sqlitePlugin.openDatabase('mydb.db', '1.0', '', 1);
+
+
 
 sql = {
    createTable:"CREATE TABLE IF NOT EXISTS main(id INTEGER PRIMARY KEY AUTOINCREMENT, rows TEXT NOT NULL default '', timestamp DATE DEFAULT (datetime('now','localtime')))",
@@ -40,6 +39,9 @@ function errorHandler(error)
 
 function onDeviceReady()
 {
+	if (typeof sqlitePlugin == 'undefined')
+		sqlitePlugin = window;
+   db = sqlitePlugin.openDatabase('mydb.db', '1.0', '', 1);
    var push = PushNotification.init({"android": {"senderID": "857416814607", "forceShow": true}});
    push.on('registration', function(data)
    {

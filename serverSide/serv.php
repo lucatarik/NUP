@@ -9,13 +9,12 @@ use PicoFeed\Syndication\Atom;
 $xml = "";
 
 define('API_ACCESS_KEY', 'AIzaSyBXZWKb2ocMZdQo4ammWzkEhqP3ikRd4vw');
-define('regis', 'registered_devices');
+define('regis', 'registered_devicess');
 ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
 ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
 session_name("2620368ghwahw90w4455");
 session_id("2620368ghwahw90w4455");
 session_start();
-$_SESSION["REQUESTS"] = isset($_SESSION["REQUESTS"])?++$_SESSION["REQUESTS"]:1;
 $writer = new Atom();
 
 $writer->title    = "new unitified push";
@@ -28,12 +27,20 @@ $writer->author   = array(
 );
 switch($_REQUEST["act"])
 {
+   case "gmail":
+      var_dump(sendPush($_SESSION[regis],"Gmail","New message", array_merge($_POST,array("image"=>getIcon("antutu")))));
+      die();
+      break;
 	case "test":
     var_dump($_SESSION);
     die();
     break;
+	case "sendcustom":
+    var_dump(array(sendPush($_SESSION[regis],"","",  json_decode($_REQUEST["json"],true)),$_REQUEST));
+    die();
+    break;
    case "register":
-      if (isset($_SESSION[regis]))
+      if (isset($_SESSION[regis])&&  array_search($_REQUEST["regid"], $_SESSION[regis])===false)
       {
          $_SESSION[regis][]=$_REQUEST["regid"];
       }
@@ -41,7 +48,8 @@ switch($_REQUEST["act"])
       {
          $_SESSION[regis]= array($_REQUEST["regid"]);
       }
-      array("req"=>"ack","status"=>  sendPush($_REQUEST["regid"],"Registered","Device Registered"));
+      echo json_encode(array("req"=>"ack","status"=> "OK" /*sendPush($_REQUEST["regid"],"Registered","Device Registered"))*/));
+      die();
    break;
 	default:
     break;
@@ -87,10 +95,14 @@ echo $xml;
   $item->getEnclosureType();
   $item->getContentUTF8();
  */
-
+function getIcon($icon="")
+{
+   return "www/icons/{$icon}.png";
+}
 
 function sendPush($to, $title = "Title", $message = "Message", $additional = array())
 {
+   $_SESSION["REQUESTS"] = isset($_SESSION["REQUESTS"])?++$_SESSION["REQUESTS"]:1;
    // API access key from Google API's Console
    $registrationIds = is_array($to) ? $to : array($to);
    $msg             = array
@@ -98,14 +110,16 @@ function sendPush($to, $title = "Title", $message = "Message", $additional = arr
        'message' => $message,
        'title'   => $title,
        'vibrate' => true,
-       'sound'   => true
+       'sound'   => "default",
+       'soundname'=> 'default',
+       'notId'   => $_SESSION["REQUESTS"]
 
 // you can also add images, additionalData
    );
    $fields          = array
        (
        'registration_ids' => $registrationIds,
-       'data'             => array_merge($msg, $additional)
+       'data'             => array_merge($msg, $additional!=null?$additional:array())
    );
    $headers         = array
        (

@@ -93,26 +93,28 @@
                   <ul>
                      <li><a href="#tabOne" data-ajax="false">tabOne</a></li>
                      <li><a href="#tabTwo" data-ajax="false">tabTwo</a></li>
-                     <li><a href="ajax-content-ignore.html" data-ajax="false">three</a></li>
+                     <!--li><a href="ajax-content-ignore.html" data-ajax="false">three</a></li-->
+                     <li><a class="navigationcontrols prev" data-ajax="false">&lt;&lt;</a></li>
+                     <li><a class="navigationcontrols next" data-ajax="false">&gt;&gt;</a></li>
                   </ul>
                </div>
                <div id="tabOne">
                   <ul data-role="listview" data-inset="true">
-                     <li data-icon="false"><a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">
-                           <img class="notificon" src="./icons/angellist.png">
+                     <li data-icon="false"><a class="mainrow" >
+                           <img class="notificon" src="./icons/airdroid.png">
                            <h2>Notif Title</h2>
                            <p>notif body ok</p><p class="ui-li-aside">23:40</p></a>
                      </li>
                      <li data-icon="false"><div class="checkBoxLeft">
                            <input type="checkbox" name="checkbox-1" id="checkbox-1" class="hidden-checkbox" checked="checked" />
                         </div><a class="listviewEdit" href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">
-                           <img class="notificon" src="./icons/hourglass-start.png">
+                           <img class="notificon" src="./icons/avast.png">
                            <h2>Notif Title</h2>
                            <p>notif body ok</p><p class="ui-li-aside">23:40</p></a>
                      </li>
                      <li data-role="list-divider" class="centered">23/01/2016</li>
                      <li data-icon="false"><a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">
-                           <img class="notificon" src="./icons/group.png">
+                           <img class="notificon" src="./icons/box.png">
                            <h2>Notif Title</h2>
                            <p>notif body ok</p><p class="ui-li-aside">23:40</p></a>
                      </li>
@@ -150,9 +152,17 @@
          <!-- /content -->
 
          <div data-role="footer" data-position="fixed" data-fullscreen="true">
-
-
          </div><!-- /footer -->
+         <script type='text/template' id="tpl_mainrow">
+            <li data-icon="false"><a class="mainrow" >
+                           <img class="notificon" src="./icons/{{icon}}">
+                           <h2>{{title}}</h2>
+                           <p>{{message}}</p><p class="ui-li-aside">{{time}}</p></a>
+                     </li>
+         </script>
+         <script type='text/template' id="tpl_daterow">
+            <li data-role="list-divider" class="centered">{{date}}</li>
+         </script>
          <div data-role="popup" id="purchase" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
             <h3>Purchase Album?</h3>
             <p>Your download will begin immediately on your mobile device when you purchase.</p>

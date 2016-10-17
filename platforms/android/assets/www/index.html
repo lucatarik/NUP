@@ -125,7 +125,11 @@
                      <ul data-role="listview" data-inset="true">
                         <li class="ui-field-contain">
                            <label>Empty table</label>
-                           <button type="button" onclick="javascript:(function(e, obj){ obj.blur();confirmDialog('Empty table?',recreateTable); })(event, this)" class="ui-btn ui-corner-all ui-btn-a">Cancel</button>
+                           <button type="button" onclick="javascript:(function(e, obj){ obj.blur();confirmDialog('Empty table?',recreateTable); })(event, this)" class="ui-btn ui-corner-all ui-btn-a">Ok</button>
+                        </li>
+                        <li class="ui-field-contain">
+                           <label>Clear old records</label>
+                           <button type="button" onclick="javascript:(function(e, obj){ obj.blur();confirmDialog('Clear old records?',clearOld); })(event, this)" class="ui-btn ui-corner-all ui-btn-a">Ok</button>
                         </li>
                         <li class="ui-field-contain">
                            <label for="flip2">Flip switch:</label>

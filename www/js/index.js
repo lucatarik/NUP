@@ -2,13 +2,18 @@ document.addEventListener("deviceready", onDeviceReady, false);
 APIURL = "http://lucatarik.altervista.org/ext_feed/notification.php";
 ROWXPAG = 5;
 def_icon = 'groupme_two.png';
-curpage=0;
-maxpage=1;
+curpage = 0;
+maxpage = 1;
 
 sql = {
    createTable: "CREATE TABLE IF NOT EXISTS main(id INTEGER PRIMARY KEY AUTOINCREMENT, rows TEXT NOT NULL default '', timestamp DATE DEFAULT (datetime('now','localtime')))",
    dropTable: "drop table main",
-   select: "select *, date(timestamp) as date, strftime(\"%H:%S\",timestamp) as time from main order by timestamp desc limit 0," + ROWXPAG
+   select: "select *, date(timestamp) as date, strftime(\"%H:%S\",timestamp) as time from main order by timestamp desc limit 0," + ROWXPAG,
+   clearOld: "CREATE TABLE IF NOT EXISTS main2(id INTEGER PRIMARY KEY AUTOINCREMENT, rows TEXT NOT NULL default '', timestamp DATE DEFAULT (datetime('now','localtime'))); \
+               delete from main where id not in (select id from main order by id desc limit 10); \
+               insert into main2 (rows,timestamp) SELECT rows,timestamp FROM main; \
+               drop table main; \
+               ALTER TABLE main2 RENAME TO main;"
 }
 
 
@@ -72,7 +77,7 @@ function onDeviceReady()
    });
    fetchpage(curpage);
 
-   $('.navigationcontrols').unbind('click').bind('click',function()
+   $('.navigationcontrols').unbind('click').bind('click', function()
    {
       if ($(this).is('.prev'))
       {
@@ -100,7 +105,7 @@ function renderpage(res)
    var newhtml = "";
    var date = new Date().toISOString().slice(0, 10);
    if (res.rows._array.length == ROWXPAG)
-      maxpage = curpage+1;
+      maxpage = curpage + 1;
    $(res.rows._array).each(function()
    {
       var tmpobj = JSON.parse(this.rows);
@@ -113,11 +118,30 @@ function renderpage(res)
       if (date != this.date)
       {
          date = this.date;
-         newhtml += TemplateEngine($('#tpl_daterow').html(),this);
+         newhtml += TemplateEngine($('#tpl_daterow').html(), this);
       }
-      newhtml += TemplateEngine($('#tpl_mainrow').html(),tmpobj);
+      newhtml += TemplateEngine($('#tpl_mainrow').html(), tmpobj);
    });
    cnt.html(newhtml).listview('refresh');
+}
+
+function clearOld()
+{
+
+   var prom = [];
+   sql.clearOld.split(";").map(function(v)
+   {
+      if (v.length)
+         prom.push(new Promise(function(resolve, reject) {
+            console.log(v);
+            resolve(executeTransaction(v))
+         }));
+   });
+
+   Promise.all(prom).then(function() {
+      curpage = 0;
+      fetchpage(0);
+   });
 }
 
 function recreateTable()
